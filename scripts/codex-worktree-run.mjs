@@ -52,7 +52,7 @@ function run(command, args, options = {}) {
     throw new Error([`Command failed: ${command} ${args.join(' ')}`, stdout, stderr].filter(Boolean).join('\n'));
   }
 
-  return result.stdout.trim();
+  return typeof result.stdout === 'string' ? result.stdout.trim() : '';
 }
 
 function safeSlug(value) {
@@ -133,7 +133,8 @@ async function main() {
     env: {
       ...process.env,
       CODEX_HARNESS_ARTIFACT_DIR: artifactDir
-    }
+    },
+    stdio: ['ignore', 'pipe', 'pipe']
   });
 
   child.stdout.on('data', (chunk) => {
