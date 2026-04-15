@@ -67,7 +67,7 @@ function timestamp() {
   return new Date().toISOString().replace(/[:.]/g, '-');
 }
 
-function codexPrompt({ task, artifactDir }) {
+function codexPrompt({ task, artifactDir, contextDir }) {
   return `You are running inside a throwaway Git worktree created for a Codex-only harness trial.
 
 Task:
@@ -76,8 +76,12 @@ ${task}
 Harness contract:
 - Read AGENTS.md first, then follow the repository docs that apply to the task.
 - Keep all run evidence in this directory: ${artifactDir}
+- Keep compact execution context in this directory: ${contextDir}
+- Before coding, read docs/skills/index.md plus the skill files required by the PRD and active plan.
+- Before coding, read ARCHITECTURE.md to confirm where app, package, infra, and test code belongs.
 - If you interact with a browser, UI, visual output, or anything screenshot-relevant, save screenshots under: ${join(artifactDir, 'screenshots')}
 - Save any extra notes, copied command output, or reproduction details under: ${join(artifactDir, 'notes')}
+- Save context-summary.md under: ${contextDir}
 - Run the relevant validation commands before finalizing.
 - Final response must include: changed files, verification performed, evidence files saved, and Not-tested items.
 - Do not delete the worktree or artifacts directory.
@@ -100,6 +104,7 @@ async function main() {
   const parentDir = args.worktreeRoot ? resolve(args.worktreeRoot) : dirname(repoRoot);
   const worktreePath = join(parentDir, `${repoName}-${slug}`);
   const artifactDir = join(repoRoot, 'artifacts', 'runs', runId);
+  const contextDir = join(repoRoot, 'artifacts', 'context', runId);
 
   if (existsSync(worktreePath)) {
     throw new Error(`Worktree path already exists: ${worktreePath}`);
@@ -107,19 +112,22 @@ async function main() {
 
   mkdirSync(join(artifactDir, 'screenshots'), { recursive: true });
   mkdirSync(join(artifactDir, 'notes'), { recursive: true });
+  mkdirSync(contextDir, { recursive: true });
+  writeFileSync(join(contextDir, 'context-summary.md'), `# ${runId} Context\n\n## Task\n\n${args.task}\n\n## Status\n\nStarted. Codex must update this file with assumptions, decisions, evidence, and next steps.\n`);
 
   run('git', ['worktree', 'add', '-b', branch, worktreePath, args.base], { cwd: repoRoot, stdio: 'inherit' });
 
   const eventsPath = join(artifactDir, 'codex-events.jsonl');
   const finalPath = join(artifactDir, 'codex-final.md');
   const summaryPath = join(artifactDir, 'run-summary.json');
-  const prompt = codexPrompt({ task: args.task, artifactDir });
+  const prompt = codexPrompt({ task: args.task, artifactDir, contextDir });
   const codexArgs = [
     'exec',
     '--json',
     '--cd', worktreePath,
     '--sandbox', args.sandbox,
     '--add-dir', artifactDir,
+    '--add-dir', contextDir,
     '--output-last-message', finalPath
   ];
 
@@ -132,7 +140,8 @@ async function main() {
     cwd: worktreePath,
     env: {
       ...process.env,
-      CODEX_HARNESS_ARTIFACT_DIR: artifactDir
+      CODEX_HARNESS_ARTIFACT_DIR: artifactDir,
+      CODEX_HARNESS_CONTEXT_DIR: contextDir
     },
     stdio: ['ignore', 'pipe', 'pipe']
   });
@@ -161,6 +170,7 @@ async function main() {
     repoRoot,
     worktreePath,
     artifactDir,
+    contextDir,
     eventsPath,
     finalPath,
     startedAt,

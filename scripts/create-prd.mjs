@@ -68,16 +68,16 @@ const selectedWorkstreams = new Set(
     .filter(Boolean)
 );
 const workstreamRows = [
-  ['Frontend', 'frontend', 'frontend-rules', 'screenshot or DOM/static check'],
-  ['Backend', 'backend', 'backend-rules', 'API/unit/integration check'],
-  ['Database', 'database', 'database-rules', 'migration/schema/seed check'],
-  ['Container', 'container', 'container-rules', 'build/run/log check']
+  ['Frontend', 'frontend', 'frontend-modern-stack + frontend-rules', 'screenshot or DOM/static check'],
+  ['Backend', 'backend', 'backend-api-stack + backend-rules', 'API/unit/integration check'],
+  ['Database', 'database', 'database-postgres-prisma + database-rules', 'migration/schema/seed check'],
+  ['Container', 'container', 'container-delivery + container-rules', 'build/run/log check']
 ].map(([label, key, skill, evidence]) => `| ${label} | ${selectedWorkstreams.has(key) ? 'yes' : 'no'} | \`${skill}\` | ${evidence} |`);
 const workstreamPlan = [
-  ['Frontend', 'frontend', 'Read \`docs/workflows/frontend-rules.md\`. Implement UI only if this workstream applies.'],
-  ['Backend', 'backend', 'Read \`docs/workflows/backend-rules.md\`. Define API contracts only if this workstream applies.'],
-  ['Database', 'database', 'Read \`docs/workflows/database-rules.md\`. Define schema/migration work only if this workstream applies.'],
-  ['Container', 'container', 'Read \`docs/workflows/container-rules.md\`. Define image/runtime work only if this workstream applies.']
+  ['Frontend', 'frontend', 'Read \`docs/skills/frontend-modern-stack.md\` and \`docs/workflows/frontend-rules.md\`. Implement UI only if this workstream applies.'],
+  ['Backend', 'backend', 'Read \`docs/skills/backend-api-stack.md\` and \`docs/workflows/backend-rules.md\`. Define API contracts only if this workstream applies.'],
+  ['Database', 'database', 'Read \`docs/skills/database-postgres-prisma.md\` and \`docs/workflows/database-rules.md\`. Define schema/migration work only if this workstream applies.'],
+  ['Container', 'container', 'Read \`docs/skills/container-delivery.md\` and \`docs/workflows/container-rules.md\`. Define image/runtime work only if this workstream applies.']
 ].map(([label, key, guidance]) => [`### ${label}`, '', `Applies: ${selectedWorkstreams.has(key) ? 'yes' : 'no'}`, '', guidance].join('\n'));
 
 writeFileSync(prdPath, lines([
@@ -112,6 +112,11 @@ writeFileSync(prdPath, lines([
   '| Workstream | Applies | Required skill/context | Evidence |',
   '| --- | --- | --- | --- |',
   ...workstreamRows,
+  '',
+  '## Always-on Skills',
+  '',
+  '- `testing-quality`: read `docs/skills/testing-quality.md` for verification and evidence strategy.',
+  '- `security-baseline`: read `docs/skills/security-baseline.md` for baseline security rules.',
   '',
   '## Functional Requirements',
   '',
@@ -153,6 +158,13 @@ writeFileSync(planPath, lines([
   '## Workstream Plan',
   '',
   ...workstreamPlan,
+  '',
+  '## Required Skill Reads',
+  '',
+  '- `docs/skills/index.md`',
+  '- `docs/skills/testing-quality.md`',
+  '- `docs/skills/security-baseline.md`',
+  '- Workstream-specific skill files listed above when Applies is yes.',
   '',
   '## Constraints',
   '',

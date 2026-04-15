@@ -32,7 +32,28 @@ const requiredPaths = [
   'docs/workflows/database-rules.md',
   'docs/workflows/backend-rules.md',
   'docs/workflows/frontend-rules.md',
-  'docs/workflows/development-rules.md'
+  'docs/workflows/development-rules.md',
+  'artifacts/context/README.md',
+  'tests/e2e/README.md',
+  'tests/README.md',
+  'infra/database/README.md',
+  'infra/container/README.md',
+  'infra/README.md',
+  'packages/config/README.md',
+  'packages/ui/README.md',
+  'packages/README.md',
+  'apps/web/README.md',
+  'apps/README.md',
+  'docs/skills/security-baseline.md',
+  'docs/skills/stack-references.md',
+  'docs/skills/testing-quality.md',
+  'docs/skills/container-delivery.md',
+  'docs/skills/database-postgres-prisma.md',
+  'docs/skills/backend-api-stack.md',
+  'docs/skills/frontend-modern-stack.md',
+  'docs/skills/index.md',
+  'docs/workflows/context-artifacts.md',
+  'docs/workflows/repository-structure.md'
 ];
 
 const root = process.cwd();

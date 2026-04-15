@@ -33,6 +33,9 @@ npm run validate
 - `docs/workflows/development-rules.md`: Frontend/Backend/Database/Container の workstream rule。
 - `docs/workflows/simple-landing-page-example.md`: PRD 作成から始めるコピー用Webサイト例。
 - `docs/workflows/development-lifecycle.md`: PR 作成、completed 更新、PRD 最新化の流れ。
+- `docs/workflows/repository-structure.md`: 開発コードとハーネスを同じrepoで管理する配置。
+- `docs/workflows/context-artifacts.md`: 実行context保存ルール。
+- `docs/skills/index.md`: repo-local skill pack。
 
 ## PRD Driven Trial
 

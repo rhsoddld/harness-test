@@ -3,6 +3,16 @@
 このリポジトリは、実装コードより先にエージェントが迷わない足場を作る。
 将来アプリケーションコードを追加するときは、固定された境界と依存方向を先に決める。
 
+## Repository Code Layout
+
+- `apps/web`: primary web application code.
+- `packages/ui`: shared UI primitives.
+- `packages/config`: shared TypeScript, lint, test, and environment configuration.
+- `infra/container`: Docker and runtime container assets.
+- `infra/database`: database schema, migration, seed, and rollback assets.
+- `tests/e2e`: browser and end-to-end tests.
+- `artifacts/context`: compact execution context summaries.
+
 ## Intended Layers
 
 依存方向は原則として下から上へ一方向にする。

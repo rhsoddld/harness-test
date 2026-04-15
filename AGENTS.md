@@ -16,6 +16,9 @@
 9. `docs/workflows/prd-to-implementation.md` で PRD から実装する流れを確認する。
 10. `docs/workflows/development-rules.md` で Frontend/Backend/Database/Container の workstream rule を確認する。
 11. `docs/workflows/development-lifecycle.md` で PR 作成、completed 更新、最新情報維持の流れを確認する。
+12. `docs/workflows/repository-structure.md` で開発コードとハーネスを同じrepoで管理する配置を確認する。
+13. `docs/workflows/context-artifacts.md` で実行context保存ルールを確認する。
+14. `docs/skills/index.md` で開発時に必要なrepo-local skillsを確認する。
 
 ## Operating Rules
 
@@ -30,6 +33,9 @@
 - PRD 起点の開発は `npm run prd:create` で PRD と active plan を作り、`npm run prd:run` で Codex worktree 実行へ渡す。
 - PRD と active plan には Frontend/Backend/Database/Container の workstream と適用ルールを必ず明記する。
 - 開発後は `pr:prepare` または `pr:publish` を実行し、`lifecycle:finalize` で active plan を completed に移して PRD の Delivery Status を更新する。
+- 開発コードは原則 `apps/`, `packages/`, `infra/`, `tests/` に置き、ハーネスdocsと同じリポジトリで管理する。
+- Codex実行時は `artifacts/context/<run-id>/context-summary.md` に短い引き継ぎcontextを残す。
+- PRD/planで指定された repo-local skill は実装前に必ず読む。
 
 ## Verification Contract
 

@@ -9,3 +9,6 @@ dist/
 artifacts/runs/
 .omx/metrics.json
 .omx/state/
+artifacts/context/*
+!artifacts/context/README.md
+artifacts/pr/
