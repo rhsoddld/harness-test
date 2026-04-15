@@ -32,6 +32,7 @@ npm run validate
 - `docs/workflows/prd-to-implementation.md`: PRD 生成から Codex 実行までの流れ。
 - `docs/workflows/development-rules.md`: Frontend/Backend/Database/Container の workstream rule。
 - `docs/workflows/simple-landing-page-example.md`: PRD 作成から始めるコピー用Webサイト例。
+- `docs/workflows/development-lifecycle.md`: PR 作成、completed 更新、PRD 最新化の流れ。
 
 ## PRD Driven Trial
 
@@ -49,4 +50,4 @@ npm run prd:run -- docs/product-specs/first-feature.md
 
 ## Validation
 
-`npm run validate` checks required docs, local Markdown links, naming rules, PRD workstream sections, and is also run by Husky before commit. Commit messages are checked by the Husky `commit-msg` hook.
+`npm run validate` checks required docs, local Markdown links, naming rules, PRD workstream sections, lifecycle completion records, and is also run by Husky before commit. Commit messages are checked by the Husky `commit-msg` hook.

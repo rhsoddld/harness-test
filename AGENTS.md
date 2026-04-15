@@ -15,6 +15,7 @@
 8. `docs/workflows/validation-and-naming.md` で lint/link/naming/commit hook ルールを確認する。
 9. `docs/workflows/prd-to-implementation.md` で PRD から実装する流れを確認する。
 10. `docs/workflows/development-rules.md` で Frontend/Backend/Database/Container の workstream rule を確認する。
+11. `docs/workflows/development-lifecycle.md` で PR 作成、completed 更新、最新情報維持の流れを確認する。
 
 ## Operating Rules
 
@@ -28,6 +29,7 @@
 - `codex exec` などの非対話実行は `artifacts/runs/` に JSONL ログ、最終応答、スクリーンショット保存先を残す。
 - PRD 起点の開発は `npm run prd:create` で PRD と active plan を作り、`npm run prd:run` で Codex worktree 実行へ渡す。
 - PRD と active plan には Frontend/Backend/Database/Container の workstream と適用ルールを必ず明記する。
+- 開発後は `pr:prepare` または `pr:publish` を実行し、`lifecycle:finalize` で active plan を completed に移して PRD の Delivery Status を更新する。
 
 ## Verification Contract
 
