@@ -81,7 +81,7 @@ Harness contract:
 - Before coding, read ARCHITECTURE.md to confirm where app, package, infra, and test code belongs.
 - If you interact with a browser, UI, visual output, or anything screenshot-relevant, save screenshots under: ${join(artifactDir, 'screenshots')}
 - Save any extra notes, copied command output, or reproduction details under: ${join(artifactDir, 'notes')}
-- Save context-summary.md under: ${contextDir}
+- Save context-summary.md under: ${contextDir} using docs/workflows/context-summary-template.md. Fill Skills Read, Commands Run, Evidence, Decisions, Assumptions, Not-tested, and Next Steps before finalizing.
 - Run the relevant validation commands before finalizing.
 - Final response must include: changed files, verification performed, evidence files saved, and Not-tested items.
 - Do not delete the worktree or artifacts directory.
@@ -113,7 +113,7 @@ async function main() {
   mkdirSync(join(artifactDir, 'screenshots'), { recursive: true });
   mkdirSync(join(artifactDir, 'notes'), { recursive: true });
   mkdirSync(contextDir, { recursive: true });
-  writeFileSync(join(contextDir, 'context-summary.md'), `# ${runId} Context\n\n## Task\n\n${args.task}\n\n## Status\n\nStarted. Codex must update this file with assumptions, decisions, evidence, and next steps.\n`);
+  writeFileSync(join(contextDir, 'context-summary.md'), `# ${runId} Context\n\n## Task\n\n${args.task}\n\n## PRD And Plan\n\nTBD\n\n## Workstreams\n\nTBD\n\n## Skills Read\n\nTBD\n\n## Commands Run\n\nTBD\n\n## Evidence\n\n- Run artifacts: ${artifactDir}\n- Context artifacts: ${contextDir}\n\n## Decisions\n\nTBD\n\n## Assumptions\n\nTBD\n\n## Not-tested\n\nTBD\n\n## Next Steps\n\nTBD\n`);
 
   run('git', ['worktree', 'add', '-b', branch, worktreePath, args.base], { cwd: repoRoot, stdio: 'inherit' });
 

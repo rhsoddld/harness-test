@@ -3,6 +3,12 @@
 Repo-local skills define the technical playbooks Codex must read during development.
 They complement global Codex skills, but do not depend on them being installed.
 
+## Boundary Definitions
+
+- Skill: technical judgement, stack preference, design tradeoffs, implementation approach.
+- Rule: required constraints, verification, and done criteria that validation or review can enforce.
+- Workflow: process order, ownership, evidence, and repository records that must be updated.
+
 ## Skills
 
 - `frontend-modern-stack.md`: Next.js, React, TypeScript, Tailwind, accessibility, screenshot evidence.

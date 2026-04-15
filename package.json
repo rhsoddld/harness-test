@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky",
-    "validate": "npm run validate:docs && npm run validate:links && npm run validate:naming && npm run validate:workstreams && npm run validate:skills && npm run validate:lifecycle",
+    "validate": "npm run validate:docs && npm run validate:links && npm run validate:naming && npm run validate:workstreams && npm run validate:skills && npm run validate:rules && npm run validate:context && npm run validate:lifecycle",
     "validate:docs": "node scripts/validate-docs.mjs",
     "validate:links": "node scripts/validate-links.mjs",
     "validate:naming": "node scripts/validate-naming.mjs",
@@ -18,7 +18,9 @@
     "pr:prepare": "node scripts/prepare-pr.mjs",
     "pr:publish": "node scripts/publish-pr.mjs",
     "lifecycle:finalize": "node scripts/finalize-run.mjs",
-    "validate:skills": "node scripts/validate-skills.mjs"
+    "validate:skills": "node scripts/validate-skills.mjs",
+    "validate:rules": "node scripts/validate-rule-files.mjs",
+    "validate:context": "node scripts/validate-context.mjs"
   },
   "devDependencies": {
     "husky": "^9.1.7"

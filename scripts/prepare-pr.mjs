@@ -75,6 +75,22 @@ const status = existsSync(worktreePath) ? run('git', ['status', '--short'], { cw
 const branch = existsSync(worktreePath) ? run('git', ['branch', '--show-current'], { cwd: worktreePath }).stdout : `agent/${args.slug}`;
 const finalPath = join(runDir, 'codex-final.md');
 const summaryPath = join(runDir, 'run-summary.json');
+let contextPath = 'missing';
+if (existsSync(summaryPath)) {
+  try {
+    const summary = JSON.parse(readFileSync(summaryPath, 'utf8'));
+    if (summary.contextDir) contextPath = join(summary.contextDir, 'context-summary.md');
+  } catch {
+    contextPath = 'unreadable run-summary.json';
+  }
+}
+const prdText = readFileSync(prdPath, 'utf8');
+const workstreamChecks = ['Frontend', 'Backend', 'Database', 'Container']
+  .map((name) => {
+    const match = prdText.match(new RegExp(`\\| ${name} \\| ([^|]+) \\|`));
+    const applies = match?.[1]?.trim() ?? 'unknown';
+    return `- [ ] ${name}: ${applies}`;
+  });
 const prdRel = prdPath.replace(`${root}/`, '');
 
 const body = [
@@ -94,12 +110,18 @@ const body = [
   `- Run directory: \`${runDir}\``,
   existsSync(finalPath) ? `- Codex final: \`${finalPath}\`` : '- Codex final: missing',
   existsSync(summaryPath) ? `- Run summary: \`${summaryPath}\`` : '- Run summary: missing',
+  contextPath !== 'missing' ? `- Context summary: \`${contextPath}\`` : '- Context summary: missing',
+  '',
+  '## Workstream Checklist',
+  '',
+  ...workstreamChecks,
   '',
   '## Verification',
   '',
   '- [ ] `npm run validate`',
   '- [ ] Task-specific PRD acceptance criteria',
   '- [ ] Screenshots saved if UI/visual work applies',
+  '- [ ] Context summary includes Skills Read, Commands Run, Evidence, Decisions, Assumptions, Not-tested, and Next Steps',
   '',
   '## Branch',
   '',
