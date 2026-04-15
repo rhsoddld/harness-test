@@ -7,3 +7,5 @@ coverage/
 dist/
 .omx/logs/
 artifacts/runs/
+.omx/metrics.json
+.omx/state/
