@@ -12,6 +12,11 @@ if (!prdPath || prdPath === '-h' || prdPath === '--help') {
 if (!existsSync(prdPath)) throw new Error(`PRD not found: ${prdPath}`);
 
 const slug = basename(prdPath, '.md');
+spawnSync('node', ['scripts/refresh-prd-checks.mjs', '--slug', slug], { cwd: process.cwd(), stdio: 'inherit' });
+spawnSync('node', ['scripts/sync-task.mjs', '--slug', slug], { cwd: process.cwd(), stdio: 'inherit' });
+const acceptanceCheck = spawnSync('node', ['scripts/validate-acceptance.mjs'], { cwd: process.cwd(), stdio: 'inherit' });
+if (acceptanceCheck.status !== 0) process.exit(acceptanceCheck.status ?? 1);
+
 const prd = readFileSync(prdPath, 'utf8');
 const planPath = join('docs', 'exec-plans', 'active', `${slug}.md`);
 const plan = existsSync(planPath) ? readFileSync(planPath, 'utf8') : 'No active execution plan found.';

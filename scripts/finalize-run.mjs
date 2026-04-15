@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 function parseArgs(argv) {
   const args = { slug: '', runDir: '', prUrl: '', status: 'completed', notes: '' };
@@ -87,4 +88,5 @@ const deliveryStatus = lines([
 writeFileSync(prdPath, upsertSection(prdText, 'Delivery Status', deliveryStatus));
 
 console.log(`Completed plan: ${completedPlan}`);
+spawnSync('node', ['scripts/sync-task.mjs', '--slug', args.slug], { cwd: root, stdio: 'inherit' });
 console.log(`Updated PRD: ${prdPath}`);

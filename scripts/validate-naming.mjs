@@ -5,6 +5,7 @@ const root = process.cwd();
 const errors = [];
 const ignoredDirs = new Set(['.git', 'node_modules', 'artifacts', '.husky', '.omx']);
 const fileAllowlist = new Set([
+  '.DS_Store',
   '.gitignore',
   '.gitkeep',
   'AGENTS.md',

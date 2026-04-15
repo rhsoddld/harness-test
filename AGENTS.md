@@ -19,6 +19,7 @@
 12. `docs/workflows/repository-structure.md` で開発コードとハーネスを同じrepoで管理する配置を確認する。
 13. `docs/workflows/context-artifacts.md` で実行context保存ルールを確認する。
 14. `docs/skills/index.md` で開発時に必要なrepo-local skillsを確認する。
+15. `docs/workflows/task-management.md` で PRD から task.md を同期する流れを確認する。
 
 ## Operating Rules
 
@@ -36,6 +37,7 @@
 - 開発コードは原則 `apps/`, `packages/`, `infra/`, `tests/` に置き、ハーネスdocsと同じリポジトリで管理する。
 - Codex実行時は `artifacts/context/<run-id>/context-summary.md` に短い引き継ぎcontextを残す。
 - PRD/planで指定された repo-local skill は実装前に必ず読む。
+- Codex実行前、PR準備前、finalize後は `docs/tasks/<slug>.md` を PRD/plan から同期する。
 
 ## Verification Contract
 

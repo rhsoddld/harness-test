@@ -24,6 +24,7 @@ function usage() {
 Creates:
   docs/product-specs/<slug>.md
   docs/exec-plans/active/<slug>.md
+  docs/tasks/<slug>.md
 `;
 }
 
@@ -122,9 +123,19 @@ writeFileSync(prdPath, lines([
   '',
   '- TBD',
   '',
-  '## Agent-verifiable Acceptance Criteria',
+  '## Acceptance Criteria',
   '',
-  '- [ ] TBD: The agent can verify this with a command, test, screenshot, or artifact.',
+  '- [ ] `npm run validate` passes.',
+  '- [ ] Required run evidence is saved under `artifacts/runs/<timestamp>-<slug>/`.',
+  '- [ ] `artifacts/context/<run-id>/context-summary.md` lists Skills Read, Commands Run, Evidence, Decisions, Assumptions, Not-tested, and Next Steps.',
+  '- [ ] Workstream-specific evidence listed in `## Workstreams And Skills` is present or explicitly recorded under `Not-tested`.',
+  '',
+  '## Test Plan',
+  '',
+  '- Run `npm run validate`.',
+  '- Run task-specific static checks listed in the implementation plan.',
+  '- For frontend/UI work, perform browser or DOM inspection and save screenshots when available.',
+  '- Save important command output under the run artifact `notes/` directory.',
   '',
   '## Evidence Requirements',
   '',
@@ -192,8 +203,68 @@ writeFileSync(planPath, lines([
   '',
   '## Not-tested',
   '',
-  '- TBD'
+  '- To be filled during implementation.'
 ]));
 
 console.log(`Created PRD: ${prdPath}`);
 console.log(`Created execution plan: ${planPath}`);
+const taskPath = join(process.cwd(), 'docs', 'tasks', `${args.slug}.md`);
+mkdirSync(join(process.cwd(), 'docs', 'tasks'), { recursive: true });
+writeFileSync(taskPath, lines([
+  `# ${args.title}`,
+  '',
+  '<!-- GENERATED FROM PRD: edit PRD/plan, then run npm run task:sync -->',
+  '',
+  `- Slug: ${args.slug}`,
+  '- Status: active',
+  `- PRD: ../product-specs/${args.slug}.md`,
+  `- Plan: ../exec-plans/active/${args.slug}.md`,
+  `- Synced-at: ${new Date().toISOString()}`,
+  '',
+  '## Source Request',
+  '',
+  args.input,
+  '',
+  '## Workstreams And Skills',
+  '',
+  '| Workstream | Applies | Required skill/context | Evidence |',
+  '| --- | --- | --- | --- |',
+  ...workstreamRows,
+  '',
+  '## Required Skill Reads',
+  '',
+  '- `docs/skills/index.md`',
+  '- `docs/skills/testing-quality.md`',
+  '- `docs/skills/security-baseline.md`',
+  '- Workstream-specific skill files listed above when Applies is yes.',
+  '',
+  '## Acceptance Criteria',
+  '',
+  '- [ ] `npm run validate` passes.',
+  '- [ ] Required run evidence is saved under `artifacts/runs/<timestamp>-<slug>/`.',
+  '- [ ] Context summary lists Skills Read, Commands Run, Evidence, Decisions, Assumptions, Not-tested, and Next Steps.',
+  '- [ ] Workstream-specific evidence is present or explicitly recorded under `Not-tested`.',
+  '',
+  '## Test Plan',
+  '',
+  '- Run `npm run validate`.',
+  '- Run task-specific static checks listed in the implementation plan.',
+  '- For frontend/UI work, perform browser or DOM inspection and save screenshots when available.',
+  '- Save important command output under the run artifact `notes/` directory.',
+  '',
+  '## Evidence Requirements',
+  '',
+  '- `codex-events.jsonl` saved under the run artifact directory.',
+  '- `codex-final.md` saved under the run artifact directory.',
+  '- Screenshots saved under `screenshots/` when UI or visual state matters.',
+  '- Validation logs saved under `notes/` when commands are run.',
+  '',
+  '## Lifecycle',
+  '',
+  'Not finalized yet.',
+  '',
+  '## Not-tested',
+  '',
+  '- To be filled during implementation.'
+]));
+console.log(`Created task: ${taskPath}`);

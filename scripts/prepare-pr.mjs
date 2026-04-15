@@ -65,6 +65,8 @@ const outDir = join(root, 'artifacts', 'pr', args.slug);
 const bodyOut = args.bodyOut || join(outDir, 'pr-body.md');
 const worktreePath = join(dirname(root), `${repoName}-${args.slug}`);
 
+spawnSync('node', ['scripts/sync-task.mjs', '--slug', args.slug], { cwd: root, stdio: 'inherit' });
+
 if (!existsSync(prdPath)) throw new Error(`PRD not found: ${prdPath}`);
 if (!existsSync(activePlan) && !existsSync(completedPlan)) throw new Error(`No active or completed plan found for slug: ${args.slug}`);
 if (!runDir || !existsSync(runDir)) throw new Error('Run evidence directory not found. Pass --run-dir explicitly.');

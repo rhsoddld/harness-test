@@ -20,7 +20,12 @@
     "lifecycle:finalize": "node scripts/finalize-run.mjs",
     "validate:skills": "node scripts/validate-skills.mjs",
     "validate:rules": "node scripts/validate-rule-files.mjs",
-    "validate:context": "node scripts/validate-context.mjs"
+    "validate:context": "node scripts/validate-context.mjs",
+    "task:sync": "node scripts/sync-task.mjs",
+    "validate:acceptance": "node scripts/validate-acceptance.mjs",
+    "validate:tasks": "node scripts/validate-tasks.mjs",
+    "validate:pre-pr": "npm run validate && npm run validate:acceptance && npm run validate:tasks",
+    "prd:refresh-checks": "node scripts/refresh-prd-checks.mjs"
   },
   "devDependencies": {
     "husky": "^9.1.7"

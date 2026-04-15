@@ -35,6 +35,8 @@ const requiredPaths = [
   'docs/workflows/development-rules.md',
   'docs/skills/taxonomy.md',
   'docs/workflows/context-summary-template.md',
+  'docs/tasks/README.md',
+  'docs/workflows/task-management.md',
   'docs/workflows/index.md',
   'artifacts/context/README.md',
   'tests/e2e/README.md',
