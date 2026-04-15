@@ -12,6 +12,8 @@
 5. `docs/workflows/github-plugin.md` で GitHub plugin 前提の PR フローを確認する。
 6. `docs/workflows/evidence-artifacts.md` で実行ログとスクリーンショット証跡の保存ルールを確認する。
 7. `docs/workflows/codex-exec-worktree.md` で Codex Exec + worktree の試験フローを確認する。
+8. `docs/workflows/validation-and-naming.md` で lint/link/naming/commit hook ルールを確認する。
+9. `docs/workflows/prd-to-implementation.md` で PRD から実装する流れを確認する。
 
 ## Operating Rules
 
@@ -23,6 +25,7 @@
 - 新規依存は必要性、代替案、検証方法を計画または PR 本文に記録する。
 - worktree ごとに独立して検証できる状態を保つ。
 - `codex exec` などの非対話実行は `artifacts/runs/` に JSONL ログ、最終応答、スクリーンショット保存先を残す。
+- PRD 起点の開発は `npm run prd:create` で PRD と active plan を作り、`npm run prd:run` で Codex worktree 実行へ渡す。
 
 ## Verification Contract
 

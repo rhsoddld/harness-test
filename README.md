@@ -28,3 +28,23 @@ npm run validate
 - `docs/workflows/git-and-commits.md`: Lore commit protocol。
 - `docs/workflows/evidence-artifacts.md`: 実行ログとスクリーンショット証跡。
 - `docs/workflows/codex-exec-worktree.md`: Codex Exec + worktree 試験フロー。
+- `docs/workflows/validation-and-naming.md`: lint/link/naming/commit hook ルール。
+- `docs/workflows/prd-to-implementation.md`: PRD 生成から Codex 実行までの流れ。
+
+## PRD Driven Trial
+
+Create a PRD and execution plan from an initial request:
+
+```bash
+npm run prd:create -- --slug first-feature --title "First Feature" --input "最初に作りたい内容を書く"
+```
+
+Run Codex in a worktree from that PRD:
+
+```bash
+npm run prd:run -- docs/product-specs/first-feature.md
+```
+
+## Validation
+
+`npm run validate` checks required docs, local Markdown links, naming rules, and is also run by Husky before commit. Commit messages are checked by the Husky `commit-msg` hook.

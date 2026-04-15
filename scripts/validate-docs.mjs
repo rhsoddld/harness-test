@@ -23,7 +23,9 @@ const requiredPaths = [
   'docs/workflows/github-plugin.md',
   'docs/workflows/git-and-commits.md',
   'docs/workflows/evidence-artifacts.md',
-  'docs/workflows/codex-exec-worktree.md'
+  'docs/workflows/codex-exec-worktree.md',
+  'docs/workflows/prd-to-implementation.md',
+  'docs/workflows/validation-and-naming.md'
 ];
 
 const root = process.cwd();
@@ -48,7 +50,9 @@ const docsToCheck = [
   'docs/workflows/github-plugin.md',
   'docs/workflows/git-and-commits.md',
   'docs/workflows/evidence-artifacts.md',
-  'docs/workflows/codex-exec-worktree.md'
+  'docs/workflows/codex-exec-worktree.md',
+  'docs/workflows/prd-to-implementation.md',
+  'docs/workflows/validation-and-naming.md'
 ];
 
 for (const doc of docsToCheck) {
