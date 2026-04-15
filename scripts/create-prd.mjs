@@ -3,13 +3,14 @@ import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 function parseArgs(argv) {
-  const args = { slug: '', title: '', input: '' };
+  const args = { slug: '', title: '', input: '', workstreams: '' };
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     const next = argv[index + 1];
     if (arg === '--slug') args.slug = next, index += 1;
     else if (arg === '--title') args.title = next, index += 1;
     else if (arg === '--input') args.input = next, index += 1;
+    else if (arg === '--workstreams') args.workstreams = next, index += 1;
     else if (arg === '-h' || arg === '--help') args.help = true;
     else throw new Error(`Unknown argument: ${arg}`);
   }
@@ -18,7 +19,7 @@ function parseArgs(argv) {
 
 function usage() {
   return `Usage:
-  node scripts/create-prd.mjs --slug <kebab-name> --title "<title>" --input "<initial development request>"
+  node scripts/create-prd.mjs --slug <kebab-name> --title "<title>" --input "<initial development request>" [--workstreams frontend,backend,database,container]
 
 Creates:
   docs/product-specs/<slug>.md
@@ -60,6 +61,24 @@ mkdirSync(productSpecDir, { recursive: true });
 mkdirSync(planDir, { recursive: true });
 
 const now = new Date().toISOString().slice(0, 10);
+const selectedWorkstreams = new Set(
+  (args.workstreams || 'frontend')
+    .split(',')
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean)
+);
+const workstreamRows = [
+  ['Frontend', 'frontend', 'frontend-rules', 'screenshot or DOM/static check'],
+  ['Backend', 'backend', 'backend-rules', 'API/unit/integration check'],
+  ['Database', 'database', 'database-rules', 'migration/schema/seed check'],
+  ['Container', 'container', 'container-rules', 'build/run/log check']
+].map(([label, key, skill, evidence]) => `| ${label} | ${selectedWorkstreams.has(key) ? 'yes' : 'no'} | \`${skill}\` | ${evidence} |`);
+const workstreamPlan = [
+  ['Frontend', 'frontend', 'Read \`docs/workflows/frontend-rules.md\`. Implement UI only if this workstream applies.'],
+  ['Backend', 'backend', 'Read \`docs/workflows/backend-rules.md\`. Define API contracts only if this workstream applies.'],
+  ['Database', 'database', 'Read \`docs/workflows/database-rules.md\`. Define schema/migration work only if this workstream applies.'],
+  ['Container', 'container', 'Read \`docs/workflows/container-rules.md\`. Define image/runtime work only if this workstream applies.']
+].map(([label, key, guidance]) => [`### ${label}`, '', `Applies: ${selectedWorkstreams.has(key) ? 'yes' : 'no'}`, '', guidance].join('\n'));
 
 writeFileSync(prdPath, lines([
   `# ${args.title}`,
@@ -87,6 +106,12 @@ writeFileSync(prdPath, lines([
   '## User Journey',
   '',
   '1. TBD',
+  '',
+  '## Workstreams And Skills',
+  '',
+  '| Workstream | Applies | Required skill/context | Evidence |',
+  '| --- | --- | --- | --- |',
+  ...workstreamRows,
   '',
   '## Functional Requirements',
   '',
@@ -124,6 +149,10 @@ writeFileSync(planPath, lines([
   '- [ ] All checked PRD acceptance criteria are satisfied.',
   '- [ ] `npm run validate` passes.',
   '- [ ] Evidence artifacts are saved for the implementation run.',
+  '',
+  '## Workstream Plan',
+  '',
+  ...workstreamPlan,
   '',
   '## Constraints',
   '',

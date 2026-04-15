@@ -6,13 +6,14 @@
   "type": "module",
   "scripts": {
     "prepare": "husky",
-    "validate": "npm run validate:docs && npm run validate:links && npm run validate:naming",
+    "validate": "npm run validate:docs && npm run validate:links && npm run validate:naming && npm run validate:workstreams",
     "validate:docs": "node scripts/validate-docs.mjs",
     "validate:links": "node scripts/validate-links.mjs",
     "validate:naming": "node scripts/validate-naming.mjs",
     "validate:commit-msg": "node scripts/validate-commit-msg.mjs",
     "prd:create": "node scripts/create-prd.mjs",
-    "prd:run": "node scripts/codex-from-prd.mjs"
+    "prd:run": "node scripts/codex-from-prd.mjs",
+    "validate:workstreams": "node scripts/validate-workstreams.mjs"
   },
   "devDependencies": {
     "husky": "^9.1.7"

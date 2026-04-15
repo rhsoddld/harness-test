@@ -30,13 +30,15 @@ npm run validate
 - `docs/workflows/codex-exec-worktree.md`: Codex Exec + worktree 試験フロー。
 - `docs/workflows/validation-and-naming.md`: lint/link/naming/commit hook ルール。
 - `docs/workflows/prd-to-implementation.md`: PRD 生成から Codex 実行までの流れ。
+- `docs/workflows/development-rules.md`: Frontend/Backend/Database/Container の workstream rule。
+- `docs/workflows/simple-landing-page-example.md`: PRD 作成から始めるコピー用Webサイト例。
 
 ## PRD Driven Trial
 
 Create a PRD and execution plan from an initial request:
 
 ```bash
-npm run prd:create -- --slug first-feature --title "First Feature" --input "最初に作りたい内容を書く"
+npm run prd:create -- --slug first-feature --title "First Feature" --workstreams frontend --input "最初に作りたい内容を書く"
 ```
 
 Run Codex in a worktree from that PRD:
@@ -47,4 +49,4 @@ npm run prd:run -- docs/product-specs/first-feature.md
 
 ## Validation
 
-`npm run validate` checks required docs, local Markdown links, naming rules, and is also run by Husky before commit. Commit messages are checked by the Husky `commit-msg` hook.
+`npm run validate` checks required docs, local Markdown links, naming rules, PRD workstream sections, and is also run by Husky before commit. Commit messages are checked by the Husky `commit-msg` hook.

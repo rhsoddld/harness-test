@@ -5,13 +5,24 @@
 ## Create PRD From Initial Request
 
 ```bash
-npm run prd:create -- --slug login-flow --title "Login Flow" --input "ユーザーがメールリンクでログインできるようにしたい"
+npm run prd:create -- --slug login-flow --title "Login Flow" --workstreams frontend,backend --input "ユーザーがメールリンクでログインできるようにしたい"
 ```
 
 This creates:
 
 - `docs/product-specs/login-flow.md`
 - `docs/exec-plans/active/login-flow.md`
+
+## Workstream Selection
+
+Use `--workstreams` to select which rule packs apply. Supported values are `frontend`, `backend`, `database`, and `container`.
+
+Examples:
+
+```bash
+--workstreams frontend
+--workstreams frontend,backend,database,container
+```
 
 ## Fill The PRD
 
@@ -25,6 +36,7 @@ This creates:
 - Functional Requirements
 - Agent-verifiable Acceptance Criteria
 - Evidence Requirements
+- Workstreams And Skills
 - Risks And Open Questions
 
 ## Run Codex From PRD

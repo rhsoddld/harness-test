@@ -25,7 +25,13 @@ const requiredPaths = [
   'docs/workflows/evidence-artifacts.md',
   'docs/workflows/codex-exec-worktree.md',
   'docs/workflows/prd-to-implementation.md',
-  'docs/workflows/validation-and-naming.md'
+  'docs/workflows/validation-and-naming.md',
+  'docs/workflows/simple-landing-page-example.md',
+  'docs/workflows/container-rules.md',
+  'docs/workflows/database-rules.md',
+  'docs/workflows/backend-rules.md',
+  'docs/workflows/frontend-rules.md',
+  'docs/workflows/development-rules.md'
 ];
 
 const root = process.cwd();
