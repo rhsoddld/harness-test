@@ -106,8 +106,37 @@ async function main() {
   const artifactDir = join(repoRoot, 'artifacts', 'runs', runId);
   const contextDir = join(repoRoot, 'artifacts', 'context', runId);
 
+  const existingBranchCheck = spawnSync('git', ['show-ref', '--verify', '--quiet', `refs/heads/${branch}`], { cwd: repoRoot, stdio: 'pipe' });
+  if (existingBranchCheck.status === 0 && !existsSync(worktreePath)) {
+    throw new Error([
+      `Branch already exists without the expected worktree: ${branch}`,
+      `Expected worktree path: ${worktreePath}`,
+      '',
+      'Safe options:',
+      `1. Reuse the branch manually: git worktree add ${worktreePath} ${branch}`,
+      `2. Delete stale branch and retry: git branch -D ${branch}`,
+      `3. Use a new slug: npm run prd:create -- --slug ${slug}-v2 ...`
+    ].join('\n'));
+  }
+
   if (existsSync(worktreePath)) {
-    throw new Error(`Worktree path already exists: ${worktreePath}`);
+    const status = spawnSync('git', ['status', '--short'], { cwd: worktreePath, encoding: 'utf8', stdio: 'pipe' });
+    const branchStatus = spawnSync('git', ['branch', '--show-current'], { cwd: worktreePath, encoding: 'utf8', stdio: 'pipe' });
+    const existingBranch = branchStatus.stdout?.trim() || branch;
+    const dirty = status.stdout?.trim();
+    const details = [
+      `Worktree path already exists: ${worktreePath}`,
+      `Existing branch: ${existingBranch}`,
+      dirty ? `Uncommitted changes:\n${dirty}` : 'Uncommitted changes: none',
+      '',
+      'Safe options:',
+      dirty
+        ? `1. Continue from existing worktree: cd ${worktreePath} && inspect/commit the changes.`
+        : `1. Remove stale worktree: git worktree remove ${worktreePath} && git branch -D ${existingBranch}`,
+      `2. Use a new slug: npm run prd:create -- --slug ${slug}-v2 ...`,
+      '3. If you intentionally want a fresh retry, first remove or commit the existing worktree changes.'
+    ];
+    throw new Error(details.join('\n'));
   }
 
   mkdirSync(join(artifactDir, 'screenshots'), { recursive: true });
