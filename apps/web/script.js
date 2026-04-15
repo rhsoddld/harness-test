@@ -1,4 +1,5 @@
 const revealItems = document.querySelectorAll(".reveal");
+const ctaButtons = document.querySelectorAll(".button");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 if (prefersReducedMotion || !("IntersectionObserver" in window)) {
@@ -17,3 +18,10 @@ if (prefersReducedMotion || !("IntersectionObserver" in window)) {
 
   revealItems.forEach((item) => observer.observe(item));
 }
+
+ctaButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    button.classList.add("is-pressed");
+    window.setTimeout(() => button.classList.remove("is-pressed"), 180);
+  });
+});
