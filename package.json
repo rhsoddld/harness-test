@@ -1,0 +1,19 @@
+{
+  "name": "harness-test",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent-first harness engineering scaffold with docs, worktree workflow, and Husky hooks.",
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "validate": "npm run validate:docs",
+    "validate:docs": "node scripts/validate-docs.mjs",
+    "validate:commit-msg": "node scripts/validate-commit-msg.mjs"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
